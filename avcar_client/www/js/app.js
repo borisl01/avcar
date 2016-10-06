@@ -28,7 +28,7 @@ angular.module('App', ['ionic'])
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
- //   console.log(navigator.globalization);
+    //alert(navigator.globalization);
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
@@ -131,4 +131,21 @@ angular.module('App', ['ionic'])
   };
 
   return Locations;
-});
+})
+
+factory('Contacts', function () {
+	  var Contacts = [{
+		name: 'test',
+		rego: 'VTM123',
+		phone: 'Unknown',
+		notes: 'Checky chick'
+	  },
+	  {name: 'test2',
+	   rego: 'asdf1',
+	   phone: 'Unknown',
+	   notes: 'Checky chick'
+	   }	  
+	  ];
+	  return Settings;
+})
+;
