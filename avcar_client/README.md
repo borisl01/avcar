@@ -1,5 +1,4 @@
-This repository contains the code from the chapter 6 example of Ionic in Action. The example is a weather app that displays current details for any number of locations.
-
+This repository contains the code for the initial Ionic PoC for Avcar project
 
 
 ### Links
