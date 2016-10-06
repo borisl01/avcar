@@ -28,6 +28,7 @@ angular.module('App', ['ionic'])
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
+    console.log(navigator.globalization);
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
