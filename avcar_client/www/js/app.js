@@ -17,6 +17,11 @@ angular.module('App', ['ionic'])
       url: '/weather/:city/:lat/:lng',
       controller: 'WeatherController',
       templateUrl: 'views/weather/weather.html'
+    })
+    .state('contact', {
+      url: '/contact/:cid',
+      controller: 'ContactsController',
+      templateUrl: 'views/contacts/contacts.html'
     });
 
   $urlRouterProvider.otherwise('/search');
@@ -28,16 +33,24 @@ angular.module('App', ['ionic'])
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
-    //alert(navigator.globalization);
+    console.log("globalization=" + navigator.globalization);
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
   });
 })
 
-.controller('LeftMenuController', function ($scope, Locations) {
+.controller('LeftMenuController', function ($scope, Locations, Contacts) {
   $scope.locations = Locations.data;
-})
+  //$scope.contacts = Contacts.data;
+  $scope.favorites = Contacts.getFavorites();
+
+  $scope.$on("favorites", function() {
+     //console.log("CallParentMethod");	
+     $scope.favorites = Contacts.getFavorites();
+   });
+  }
+)
 
 .filter('timezone', function () {
   return function (input, timezone) {
@@ -133,19 +146,77 @@ angular.module('App', ['ionic'])
   return Locations;
 })
 
-factory('Contacts', function () {
-	  var Contacts = [{
+.factory('Contacts', function ($rootScope) {
+	var Contacts = {
+	  data:[{
+		id	:	1,
 		name: 'test',
 		rego: 'VTM123',
 		phone: 'Unknown',
-		notes: 'Checky chick'
+		notes: 'Checky chick',
+		isFavorite : true	
 	  },
-	  {name: 'test2',
-	   rego: 'asdf1',
-	   phone: 'Unknown',
-	   notes: 'Checky chick'
-	   }	  
-	  ];
-	  return Settings;
+	  {
+		id	:	2,
+		name: 'test22',
+		rego: 'ABC123',
+		phone: 'Unknown',
+		notes: 'Checky chick',
+		isFavorite : true
+	  }],
+	  toggle : function(cid) {
+		 var aContact = Contacts.getContactById(cid);
+		 var index = Contacts.getIndex(aContact);
+		 Contacts.data[index].isFavorite = !Contacts.data[index].isFavorite
+		 //console.log('value is ', Contacts.data[index].isFavorite, ' emitting...');
+		 $rootScope.$broadcast("favorites", {}); 
+	  },
+	  getFavorites : function() {
+		  var result = [];
+	      angular.forEach(Contacts.data, function (c, i) {
+	        if (c.isFavorite) {
+	          result[result.length] = c;
+	        }
+	      });
+	      //console.log('favorites.length=' + result.length);
+	      for (m = 0; m<result.length; m++){
+	    	  item = result[m];
+	    	  //console.log(item.id + ' ' + item.name + " " + item.isFavorite); 
+	      }
+	      return result;
+	  },
+	  getIndex: function (item) {
+	      var index = -1;
+	      angular.forEach(Contacts.data, function (c, i) {
+	        if (item.name == c.name) {
+	          index = i;
+	        }
+	      });
+	      return index;
+	    },
+	  getContactById : function(cid) {
+		  var result = null;
+	      angular.forEach(Contacts.data, function (c, i) {
+	        if (c.id == cid) {
+	          result = c;
+	        }
+	      });
+	      return result;
+	  },
+	  getContactByName : function(aname) {
+		  var result = null;
+	      angular.forEach(Contacts.data, function (c, i) {
+	        if (c.name == aname) {
+	          result = c;
+	        }
+	      });
+	      return result;
+	  },
+	  contactPrint: function(item) {
+		 console.log("Contact assigned to scope:"); 
+		 console.log(item.id + ' ' + item.name + " " + item.isFavorite); 
+	  }
+	}
+	return Contacts;
 })
 ;
