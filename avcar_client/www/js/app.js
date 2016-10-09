@@ -1,4 +1,4 @@
-angular.module('App', ['ionic'])
+angular.module('App', ['ionic', 'ngResource'])
 
 .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -28,19 +28,37 @@ angular.module('App', ['ionic'])
 })
 
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $http, Translator) {
+	Translator.init(); 
+    Translator.setDict('en-US');
+	//Translator.setDict('ua-UA');
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
-    console.log("globalization=" + navigator.globalization);
+   // console.log("globalization=" + navigator.globalization);
+   
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
   });
 })
 
-.controller('LeftMenuController', function ($scope, Locations, Contacts) {
+.controller('LeftMenuController', function ($scope, $rootScope, Translator, Locations, Contacts) {
+  console.log('Launching controller...');
+  
+  $rootScope.dictPromise.then(function(response){
+	 var dict = []
+	 angular.forEach(response.data, function (value, key){
+	    //console.log(key , value);
+	    entryStr = '{"key":"' + key +'","value":"' + value + '"}';
+	    console.log(entryStr);
+	    dict[dict.length] = JSON.parse(entryStr);
+	 });
+	 console.log('len='+dict.length)
+	 $rootScope.dict = dict;
+  });
+  
   $scope.locations = Locations.data;
   //$scope.contacts = Contacts.data;
   $scope.favorites = Contacts.getFavorites();
@@ -51,6 +69,20 @@ angular.module('App', ['ionic'])
    });
   }
 )
+
+.filter('dict', function ($rootScope, Translator) {
+	return function(skey) {
+		console.log('skey='+skey );
+		result = skey;
+
+		for (j=0; j < $rootScope.dict.length; j++) {
+			entry = $rootScope.dict[j]
+			console.log(j + ' ' + entry.key );
+			if (entry.key == skey) {result = entry.value;  found = 1; return result; }
+		}
+		return result;
+	}
+})
 
 .filter('timezone', function () {
   return function (input, timezone) {
@@ -88,6 +120,52 @@ angular.module('App', ['ionic'])
   return function (icon) {
     return map[icon] || '';
   }
+})
+
+.factory('Translator', function ($http, $rootScope) {
+  var Dictionary = {
+	dict : [],
+	
+	init : function() {
+	   console.log('navigator.language =' + navigator.language);
+       var defaultLocale = 'en-US'
+      // Translator.setDict(defaultLocale);
+
+       $http.get('lang/locales.json').success(function(response, $rootScope){
+    	  var supportedLocales = [];
+    	  angular.forEach(response, function (value, key){
+		    //console.log(key , value);
+		    entryStr = '{"key":"' + key +'","value":"' + value + '"}';
+		   // console.log(entryStr);
+		    supportedLocales[supportedLocales.length] = JSON.parse(entryStr);
+		  })
+		  //console.log('len='+supportedLocales.length)
+    	  $rootScope.supportedLocales = response;
+      }) ;	
+  	  //return '';
+   },
+   
+   setDict : function(locale) {
+	  var path = 'lang/' + locale + ".lang.json"
+	  console.log('Creating a promise for ' + path);
+	  $rootScope.dictPromise = $http.get(path);
+	  
+	 /* $http.get(path).success(function(response, $rootScope){
+	   	var dict = []
+		angular.forEach(response, function (value, key){
+	    //console.log(key , value);
+	    entryStr = '{"key":"' + key +'","value":"' + value + '"}';
+	    console.log(entryStr);
+	    dict[dict.length] = JSON.parse(entryStr);
+	    })
+	    console.log('len='+dict.length)
+	    $rootScope.dict = dict;
+	  })
+	  .error(function (err) { console.log( 'Could not load dict for ' + locale); });
+	  */
+    }
+  }
+  return Dictionary;
 })
 
 .factory('Settings', function () {
@@ -153,7 +231,7 @@ angular.module('App', ['ionic'])
 		name: 'test',
 		rego: 'VTM123',
 		phone: 'Unknown',
-		notes: 'Checky chick',
+		notes: 'Cheeky chick',
 		isFavorite : true	
 	  },
 	  {

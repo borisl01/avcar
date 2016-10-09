@@ -7,8 +7,8 @@ This repository contains the code for the initial Ionic PoC for Avcar project
 * [Get the book](http://www.manning.com/wilken?a_aid=ionicinaction)
 
 ### Quick Setup
-
-    npm install -g ionic
+    Download and install node.js
+    npm install -g ionic 
     git clone https://github.com/ionic-in-action/avcar_client.git
     cd avcar_client
     ionic serve

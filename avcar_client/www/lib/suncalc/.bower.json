@@ -8,8 +8,7 @@
     "tag": "v1.6.0",
     "commit": "3d351e56569607620c56e278d2aa2ff7ea688e21"
   },
-  "_source": "git://github.com/mourner/suncalc.git",
+  "_source": "https://github.com/mourner/suncalc.git",
   "_target": "~1.6.0",
-  "_originalSource": "suncalc",
-  "_direct": true
+  "_originalSource": "suncalc"
 }
