@@ -47,6 +47,8 @@ angular.module('App', ['ionic', 'ngResource'])
 .controller('LeftMenuController', function ($scope, $rootScope, Translator, Locations, Contacts) {
   console.log('Launching controller...');
   
+  Translator.fulfil();
+ /* 
   $rootScope.dictPromise.then(function(response){
 	 var dict = []
 	 angular.forEach(response.data, function (value, key){
@@ -58,14 +60,17 @@ angular.module('App', ['ionic', 'ngResource'])
 	 console.log('len='+dict.length)
 	 $rootScope.dict = dict;
   });
+  */
   
   $scope.locations = Locations.data;
   //$scope.contacts = Contacts.data;
   $scope.favorites = Contacts.getFavorites();
 
   $scope.$on("favorites", function() {
-     //console.log("CallParentMethod");	
+     console.log("CallParentMethod");	
      $scope.favorites = Contacts.getFavorites();
+     Translator.setDict('ua-UA');
+     Translator.fulfil();
    });
   }
 )
@@ -163,7 +168,22 @@ angular.module('App', ['ionic', 'ngResource'])
 	  })
 	  .error(function (err) { console.log( 'Could not load dict for ' + locale); });
 	  */
-    }
+    },
+    
+    fulfil : function()  { 
+       console.log('fulfil...');	
+       $rootScope.dictPromise.then(function(response){
+          var dict = []
+   	      angular.forEach(response.data, function (value, key){
+   	        //console.log(key , value);
+   	        entryStr = '{"key":"' + key +'","value":"' + value + '"}';
+   	        console.log(entryStr);
+   	        dict[dict.length] = JSON.parse(entryStr);
+   	      });
+   	      console.log('len='+dict.length)
+   	      $rootScope.dict = dict;
+        });
+     }
   }
   return Dictionary;
 })
