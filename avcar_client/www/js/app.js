@@ -79,11 +79,14 @@ angular.module('App', ['ionic', 'ngResource'])
 	return function(skey) {
 		console.log('skey='+skey );
 		result = skey;
-
-		for (j=0; j < $rootScope.dict.length; j++) {
-			entry = $rootScope.dict[j]
-			console.log(j + ' ' + entry.key );
-			if (entry.key == skey) {result = entry.value;  found = 1; return result; }
+		try {	
+			for (j=0; j < $rootScope.dict.length; j++) {
+				entry = $rootScope.dict[j]
+				console.log(j + ' ' + entry.key );
+				if (entry.key == skey) {result = entry.value;  found = 1; return result; }
+			}
+		} catch(err) {
+			throw "Translation not loaded yet, trying again...";
 		}
 		return result;
 	}
@@ -154,20 +157,6 @@ angular.module('App', ['ionic', 'ngResource'])
 	  var path = 'lang/' + locale + ".lang.json"
 	  console.log('Creating a promise for ' + path);
 	  $rootScope.dictPromise = $http.get(path);
-	  
-	 /* $http.get(path).success(function(response, $rootScope){
-	   	var dict = []
-		angular.forEach(response, function (value, key){
-	    //console.log(key , value);
-	    entryStr = '{"key":"' + key +'","value":"' + value + '"}';
-	    console.log(entryStr);
-	    dict[dict.length] = JSON.parse(entryStr);
-	    })
-	    console.log('len='+dict.length)
-	    $rootScope.dict = dict;
-	  })
-	  .error(function (err) { console.log( 'Could not load dict for ' + locale); });
-	  */
     },
     
     fulfil : function()  { 
