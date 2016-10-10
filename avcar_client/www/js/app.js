@@ -32,35 +32,22 @@ angular.module('App', ['ionic', 'ngResource'])
 	Translator.init(); 
     Translator.setDict('en-US');
 	//Translator.setDict('ua-UA');
-  $ionicPlatform.ready(function() {
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
-   // console.log("globalization=" + navigator.globalization);
+    $ionicPlatform.ready(function() {
+       if(window.cordova && window.cordova.plugins.Keyboard) {
+         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+       }
+       // console.log("globalization=" + navigator.globalization);
    
-    if(window.StatusBar) {
-      StatusBar.styleDefault();
-    }
-  });
+       if(window.StatusBar) {
+          StatusBar.styleDefault();
+       }
+    });
 })
 
 .controller('LeftMenuController', function ($scope, $rootScope, Translator, Locations, Contacts) {
-  console.log('Launching controller...');
+  //console.log('Launching controller...');
   
   Translator.fulfil();
- /* 
-  $rootScope.dictPromise.then(function(response){
-	 var dict = []
-	 angular.forEach(response.data, function (value, key){
-	    //console.log(key , value);
-	    entryStr = '{"key":"' + key +'","value":"' + value + '"}';
-	    console.log(entryStr);
-	    dict[dict.length] = JSON.parse(entryStr);
-	 });
-	 console.log('len='+dict.length)
-	 $rootScope.dict = dict;
-  });
-  */
   
   $scope.locations = Locations.data;
   //$scope.contacts = Contacts.data;
@@ -131,33 +118,32 @@ angular.module('App', ['ionic', 'ngResource'])
 })
 
 .factory('Translator', function ($http, $rootScope) {
-  var Dictionary = {
+	var Dictionary = {
 	dict : [],
 	
 	init : function() {
 	   console.log('navigator.language =' + navigator.language);
-       var defaultLocale = 'en-US'
+      var defaultLocale = 'en-US'
       // Translator.setDict(defaultLocale);
 
-       $http.get('lang/locales.json').success(function(response, $rootScope){
-    	  var supportedLocales = [];
-    	  angular.forEach(response, function (value, key){
-		    //console.log(key , value);
-		    entryStr = '{"key":"' + key +'","value":"' + value + '"}';
-		   // console.log(entryStr);
-		    supportedLocales[supportedLocales.length] = JSON.parse(entryStr);
-		  })
-		  //console.log('len='+supportedLocales.length)
-    	  $rootScope.supportedLocales = response;
+      $http.get('lang/locales.json').success(function(response, $rootScope){
+    	  	var supportedLocales = [];
+    	  	angular.forEach(response, function (value, key){
+    	  		//console.log(key , value);
+    	  		entryStr = '{"key":"' + key +'","value":"' + value + '"}';
+    	  		// console.log(entryStr);
+    	  		supportedLocales[supportedLocales.length] = JSON.parse(entryStr);
+    	  	})
+    	  	//console.log('len='+supportedLocales.length)
+    	  	$rootScope.supportedLocales = response;
       }) ;	
-  	  //return '';
    },
    
    setDict : function(locale) {
-	  var path = 'lang/' + locale + ".lang.json"
-	  console.log('Creating a promise for ' + path);
-	  $rootScope.dictPromise = $http.get(path);
-    },
+   	var path = 'lang/' + locale + ".lang.json"
+   	console.log('Creating a promise for ' + path);
+   	$rootScope.dictPromise = $http.get(path);
+   },
     
     fulfil : function()  { 
        console.log('fulfil...');	
