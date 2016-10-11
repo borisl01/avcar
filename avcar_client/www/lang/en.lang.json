@@ -1,4 +1,4 @@
 {
-   "contacts" : "Contacts",
-	"toggleFavorite" : "Toggle favorite"
+   "CONTACTS" : "Contacts",
+   "TOGGLE_FAVORITE" : "Toggle favorite"
 }
