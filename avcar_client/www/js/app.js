@@ -1,7 +1,6 @@
-angular.module('App', ['ionic', 'ngResource'])
+angular.module('App', ['ionic', 'pascalprecht.translate'])
 
-.config(function ($stateProvider, $urlRouterProvider) {
-
+.config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
   $stateProvider
     .state('search', {
       url: '/search',
@@ -24,14 +23,31 @@ angular.module('App', ['ionic', 'ngResource'])
       templateUrl: 'views/contacts/contacts.html'
     });
 
-  $urlRouterProvider.otherwise('/search');
-})
+    $urlRouterProvider.otherwise('/search');
+  
+
+  $translateProvider
+  	.useStaticFilesLoader({
+  		prefix: '/lang/',
+  		suffix: '.lang.json'
+  	})
+  	.registerAvailableLanguageKeys(['en', 'de', 'ua'], {
+  		'en' : 'en', 'en_GB': 'en', 'en_US': 'en',
+  		'de' : 'de', 'de_DE': 'de', 'de_CH': 'de',
+  		'ua' : 'ua', 'ua_UA': 'ua'
+  	})
+  	.preferredLanguage('en')
+  	.fallbackLanguage('en')
+  	.determinePreferredLanguage()
+  	.useSanitizeValueStrategy('escapeParameters');
+})  
 
 
-.run(function($ionicPlatform, $http, Translator) {
-	Translator.init(); 
-    Translator.setDict('en-US');
-	//Translator.setDict('ua-UA');
+
+.run(function($ionicPlatform, $http) {
+	//Translator.init(); 
+    //Translator.setDict('en-US');
+ 
     $ionicPlatform.ready(function() {
        if(window.cordova && window.cordova.plugins.Keyboard) {
          cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -44,40 +60,29 @@ angular.module('App', ['ionic', 'ngResource'])
     });
 })
 
-.controller('LeftMenuController', function ($scope, $rootScope, Translator, Locations, Contacts) {
+.controller('LeftMenuController', function ($scope, $rootScope, $translate, Locations, Contacts, Settings) {
   //console.log('Launching controller...');
   
-  Translator.fulfil();
+  // Translator.fulfil();
   
   $scope.locations = Locations.data;
   //$scope.contacts = Contacts.data;
   $scope.favorites = Contacts.getFavorites();
+  
+  Settings.setLanguage('en');
 
   $scope.$on("favorites", function() {
      console.log("CallParentMethod");	
      $scope.favorites = Contacts.getFavorites();
-     Translator.setDict('ua-UA');
-     Translator.fulfil();
+     //Translator.fulfil();
+     Settings.setLanguage('ua');
    });
+  
+   $scope.switchLanguage = function(key) {
+ 	    $translate.use(key);
+	};
   }
 )
-
-.filter('dict', function ($rootScope, Translator) {
-	return function(skey) {
-		console.log('skey='+skey );
-		result = skey;
-		try {	
-			for (j=0; j < $rootScope.dict.length; j++) {
-				entry = $rootScope.dict[j]
-				console.log(j + ' ' + entry.key );
-				if (entry.key == skey) {result = entry.value;  found = 1; return result; }
-			}
-		} catch(err) {
-			throw "Translation not loaded yet, trying again...";
-		}
-		return result;
-	}
-})
 
 .filter('timezone', function () {
   return function (input, timezone) {
@@ -117,57 +122,24 @@ angular.module('App', ['ionic', 'ngResource'])
   }
 })
 
-.factory('Translator', function ($http, $rootScope) {
-	var Dictionary = {
-	dict : [],
-	
-	init : function() {
-	   console.log('navigator.language =' + navigator.language);
-      var defaultLocale = 'en-US'
-      // Translator.setDict(defaultLocale);
-
-      $http.get('lang/locales.json').success(function(response, $rootScope){
-    	  	var supportedLocales = [];
-    	  	angular.forEach(response, function (value, key){
-    	  		//console.log(key , value);
-    	  		entryStr = '{"key":"' + key +'","value":"' + value + '"}';
-    	  		// console.log(entryStr);
-    	  		supportedLocales[supportedLocales.length] = JSON.parse(entryStr);
-    	  	})
-    	  	//console.log('len='+supportedLocales.length)
-    	  	$rootScope.supportedLocales = response;
-      }) ;	
-   },
-   
-   setDict : function(locale) {
-   	var path = 'lang/' + locale + ".lang.json"
-   	console.log('Creating a promise for ' + path);
-   	$rootScope.dictPromise = $http.get(path);
-   },
-    
-    fulfil : function()  { 
-       console.log('fulfil...');	
-       $rootScope.dictPromise.then(function(response){
-          var dict = []
-   	      angular.forEach(response.data, function (value, key){
-   	        //console.log(key , value);
-   	        entryStr = '{"key":"' + key +'","value":"' + value + '"}';
-   	        console.log(entryStr);
-   	        dict[dict.length] = JSON.parse(entryStr);
-   	      });
-   	      console.log('len='+dict.length)
-   	      $rootScope.dict = dict;
-        });
-     }
+.factory('Settings', function ($translate, $rootScope) {
+	var Settings = {
+		units: 'us',
+		days: 8,
+  
+	setLanguage : function(lang)  {
+		console.log('Setting langiuage to '+ lang);
+	    $translate.use(lang);
+	    $rootScope.loadedTranslations = [];
+	    $rootScope.LoadValues = function()  {
+	    $translate(['TOGGLE_FAVORITE','secound']).then(function(translations){
+	    	$rootScope.loadedTranslations = translations;
+	    	})
+	    };
+	    $rootScope.LoadValues();
+	    console.log($rootScope.loadedTranslations.TOGGLE_FAVORITE);
+	}
   }
-  return Dictionary;
-})
-
-.factory('Settings', function () {
-  var Settings = {
-    units: 'us',
-    days: 8
-  };
   return Settings;
 })
 

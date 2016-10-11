@@ -6,7 +6,8 @@
   },
   "dependencies": {
     "moment-timezone": "~0.2.5",
-    "suncalc": "~1.6.0"
+    "suncalc": "~1.6.0",
+    "angular-translate": "^2.12.1"
   },
   "resolutions": {
     "angular": "1.5.8"

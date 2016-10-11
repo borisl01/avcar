@@ -18,6 +18,9 @@
     <script src="lib/moment/moment.js"></script>
     <script src="lib/moment-timezone/builds/moment-timezone-with-data.js"></script>
     <script src="lib/suncalc/suncalc.js"></script>
+    
+    <script src="lib/angular-translate/angular-translate.js"></script>
+    <script src="lib/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
   <!--   <script src="lib/angular-resourse/angular-resource.js"></script>  -->
  
     <!-- cordova script (this will be a 404 during development) -->
@@ -44,7 +47,7 @@
       </ion-side-menu-content>
       <ion-side-menu side="left" cache-view="false" ng-controller="LeftMenuController">
         <ion-header-bar class="bar-dark">
-          <h1 class="title">{{"contacts" | dict}}</h1>
+          <h1 class="title" translate="CONTACTS"></h1>
         </ion-header-bar>
         <ion-content>
           <ion-list>
