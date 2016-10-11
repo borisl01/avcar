@@ -47,8 +47,13 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 .run(function($ionicPlatform, $http) {
 	//Translator.init(); 
     //Translator.setDict('en-US');
- 
+
     $ionicPlatform.ready(function() {
+    	navigator.splashscreen.show();
+    	setTimeout(function () {
+    		navigator.splashscreen.hide();
+    	}, 5000);
+     
        if(window.cordova && window.cordova.plugins.Keyboard) {
          cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
        }

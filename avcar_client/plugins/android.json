@@ -12,17 +12,20 @@
         },
         "cordova-plugin-globalization": {
             "PACKAGE_NAME": "avcar.client"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "avcar.client"
         }
     },
     "dependent_plugins": {
         "com.ionic.keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.chapter6324530"
+            "PACKAGE_NAME": "avcar.client"
         },
         "org.apache.cordova.console": {
-            "PACKAGE_NAME": "com.ionicframework.chapter6324530"
+            "PACKAGE_NAME": "avcar.client"
         },
         "org.apache.cordova.device": {
-            "PACKAGE_NAME": "com.ionicframework.chapter6324530"
+            "PACKAGE_NAME": "avcar.client"
         }
     }
 }
