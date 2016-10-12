@@ -1,0 +1,46 @@
+<ion-view view-title="CONTACTS_LIST | translate">
+  <ion-nav-buttons side="left">
+    <button class="button button-clear" menu-toggle="left"><span class="icon ion-navicon"></span></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button button-icon" ng-click="showContactOptions()"><span class="icon ion-more"></span></button>
+  </ion-nav-buttons>
+  <ion-content>
+    <ion-scroll direction="y" paging="true" ng-style="{width: getWidth(), height: getHeight()}">
+      <div ng-style="{height: getTotalHeight()}">
+        <div class="scroll-page center" ng-style="{width: getWidth(), height: getHeight()}">
+          <div class="bar bar-dark">
+            <h1 class="title">Contact details</h1>
+          </div>
+          <div class="has-header">
+            <p>{{contact.name}}&nbsp;{{contact.rego}}</p>
+            <p>{{contact.notes}}</p>
+            <p>Phone: {{contact.phone}}</p>
+          </div>
+        </div>
+        <div class="scroll-page" ng-style="{width: getWidth(), height: getHeight()}">
+          <div class="bar bar-dark">
+            <h1 class="title">Daily Forecast</h1>
+          </div>
+          <div class="has-header">
+            <p class="padding">{{forecast.daily.summary}}</p>
+            <div class="row" ng-repeat="day in forecast.daily.data | limitTo:settings.days">
+              <div class="col col-50">{{day.time + '000' | date:'EEEE'}}</div>
+              <div class="col"><span class="icon" ng-class="day.icon | icons"></span><sup>{{day.precipProbability | chance}}</sup></div>
+              <div class="col">{{day.temperatureMax | number:0}}&deg;</div>
+              <div class="col">{{day.temperatureMin | number:0}}&deg;</div>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-page" ng-style="{width: getWidth(), height: getHeight()}">
+          <div class="bar bar-dark">
+            <h1 class="title">Weather Stats</h1>
+          </div>
+          <div class="list has-header">
+            <div class="item">Sunrise: </div>
+          </div>
+        </div>
+      </div>
+    </ion-scroll>
+  </ion-content>
+</ion-view>
