@@ -24,11 +24,14 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
     });
 
     $urlRouterProvider.otherwise('/search');
-  
+    
+    
+    //var v_lang = window.navigator.userLanguage || window.navigator.language;
+    //$translateProvider.preferredLanguage(v_lang.substring(0, 2));
 
   $translateProvider
   	.useStaticFilesLoader({
-  		prefix: '/lang/',
+  		prefix: 'res/lang/',
   		suffix: '.lang.json'
   	})
   	.registerAvailableLanguageKeys(['en', 'de', 'ua'], {
@@ -49,10 +52,10 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
     //Translator.setDict('en-US');
 
     $ionicPlatform.ready(function() {
-    	navigator.splashscreen.show();
-    	setTimeout(function () {
-    		navigator.splashscreen.hide();
-    	}, 5000);
+    //	navigator.splashscreen.show();
+    //	setTimeout(function () {
+    //		navigator.splashscreen.hide();
+   // 	}, 5000);
      
        if(window.cordova && window.cordova.plugins.Keyboard) {
          cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
