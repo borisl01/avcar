@@ -1,4 +1,5 @@
 {
 	"CONTACTS" : "Kontakte",
-	"TOGGLE_FAVORITE" : "Liebling schalten"
+	"TOGGLE_FAVORITE" : "Liebling schalten",
+	"CONTACTS_LIST" : "Alle Kontakten" 
 }

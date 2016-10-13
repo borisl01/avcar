@@ -17,6 +17,11 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
       controller: 'WeatherController',
       templateUrl: 'views/weather/weather.html'
     })
+    .state('contacts', {
+      url: '/contacts',
+      controller: 'ContactsController',
+      templateUrl: 'views/contacts/all_contacts.html'
+    })
     .state('contact', {
       url: '/contact/:cid',
       controller: 'ContactsController',
@@ -48,16 +53,9 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 
 
 .run(function($ionicPlatform, $http) {
-	//Translator.init(); 
-    //Translator.setDict('en-US');
-
     $ionicPlatform.ready(function() {
-    //	navigator.splashscreen.show();
-    //	setTimeout(function () {
-    //		navigator.splashscreen.hide();
-   // 	}, 5000);
-     
-       if(window.cordova && window.cordova.plugins.Keyboard) {
+
+    	if(window.cordova && window.cordova.plugins.Keyboard) {
          cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
        }
        // console.log("globalization=" + navigator.globalization);
@@ -69,20 +67,15 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 })
 
 .controller('LeftMenuController', function ($scope, $rootScope, $translate, Locations, Contacts, Settings) {
-  //console.log('Launching controller...');
-  
-  // Translator.fulfil();
-  
   $scope.locations = Locations.data;
-  //$scope.contacts = Contacts.data;
+  $scope.contacts = Contacts.getAll();
   $scope.favorites = Contacts.getFavorites();
-  
+    
   Settings.setLanguage('en');
 
   $scope.$on("favorites", function() {
      console.log("CallParentMethod");	
      $scope.favorites = Contacts.getFavorites();
-     //Translator.fulfil();
      Settings.setLanguage('ua');
    });
   
@@ -224,6 +217,9 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 		 //console.log('value is ', Contacts.data[index].isFavorite, ' emitting...');
 		 $rootScope.$broadcast("favorites", {}); 
 	  },
+	  getAll : function() {
+		 return this.data;
+	  },
 	  getFavorites : function() {
 		  var result = [];
 	      angular.forEach(Contacts.data, function (c, i) {
@@ -266,7 +262,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 	      return result;
 	  },
 	  contactPrint: function(item) {
-		 console.log("Contact assigned to scope:"); 
+		//console.log("Contact assigned to scope:"); 
 		 console.log(item.id + ' ' + item.name + " " + item.isFavorite); 
 	  }
 	}

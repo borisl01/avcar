@@ -20,28 +20,15 @@
         </div>
         <div class="scroll-page" ng-style="{width: getWidth(), height: getHeight()}">
           <div class="bar bar-dark">
-            <h1 class="title">Daily Forecast</h1>
+            <h1 class="title"> Forecast</h1>
           </div>
           <div class="has-header">
-            <p class="padding">{{forecast.daily.summary}}</p>
-            <div class="row" ng-repeat="day in forecast.daily.data | limitTo:settings.days">
-              <div class="col col-50">{{day.time + '000' | date:'EEEE'}}</div>
-              <div class="col"><span class="icon" ng-class="day.icon | icons"></span><sup>{{day.precipProbability | chance}}</sup></div>
-              <div class="col">{{day.temperatureMax | number:0}}&deg;</div>
-              <div class="col">{{day.temperatureMin | number:0}}&deg;</div>
-            </div>
+            <p class="padding">Summary</p>
+   
           </div>
         </div>
         <div class="scroll-page" ng-style="{width: getWidth(), height: getHeight()}">
-          <div class="bar bar-dark">
-            <h1 class="title">Weather Stats</h1>
-          </div>
-          <div class="list has-header">
-            <div class="item">Sunrise: {{forecast.daily.data[0].sunriseTime | timezone:forecast.timezone}}</div>
-            <div class="item">Sunset: {{forecast.daily.data[0].sunsetTime | timezone:forecast.timezone}}</div>
-            <div class="item">Visibility: {{forecast.currently.visibility}}</div>
-            <div class="item">Humidity: {{forecast.currently.humidity * 100}}%</div>
-          </div>
+         
         </div>
       </div>
     </ion-scroll>

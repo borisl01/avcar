@@ -51,10 +51,8 @@
         </ion-header-bar>
         <ion-content>
           <ion-list>
-            <ion-item class="item-icon-left" ui-sref="search" menu-close><span class="icon ion-search"></span> Find a City</ion-item>
+            <ion-item class="item-icon-left" ui-sref="contacts" menu-close><span class="icon ion-person-stalker"></span> All contacts</ion-item>
             <ion-item class="item-icon-left" ui-sref="settings" menu-close><span class="icon ion-ios-cog"></span> Settings</ion-item>
-            <ion-item class="item-divider">Favorites</ion-item>
-            <ion-item class="item-icon-left" ui-sref="weather({city: location.city, lat: location.lat, lng: location.lng})" menu-close ng-repeat="location in locations"><span class="icon ion-ios-location"></span> {{location.city}}</ion-item> 
             <ion-item class="item-divider">Favorite contacts</ion-item>
             <ion-item class="item-icon-left" ui-sref="contact({cid :c.id})" menu-close ng-repeat="c in favorites"><span class="icon ion-person"></span>{{c.name}}</ion-item>
 

@@ -2,6 +2,7 @@ angular.module('App')
 .controller('ContactsController', function ($scope, $rootScope, $http, $stateParams, $ionicActionSheet, $ionicModal, $translate, Contacts, Settings) {
   $scope.params = $stateParams;
   $scope.settings = Settings;
+  $scope.contacts = Contacts.getAll();
   
   var theContact = Contacts.getContactById($stateParams.cid);
   
@@ -49,5 +50,35 @@ angular.module('App')
       }
     });
   };
+  
+  $scope.showContactListOptions = function () {	
+	    var sheet = $ionicActionSheet.show({
+		
+	      buttons: [
+	        //{text: 'Toggle Favorite'},
+	        {text : 'Add a contact'},
+	        {text: 'Add from phonebook'}
+	      ],
+	      cancelText: 'Cancel',
+	      buttonClicked: function (index, $scope) {
+	        if (index === 0) {
+	          Contacts.toggle($stateParams.cid);
+	        }
+	        if (index === 1) {
+
+	        }
+	        if (index === 2) {
+
+	        }
+	        if (index === 3) {
+
+	        }
+	        if (index === 4) {
+
+	        }
+	        return true;
+	      }
+	    });
+	  };
 
 });
