@@ -2,20 +2,10 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 
 .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
   $stateProvider
-    .state('search', {
-      url: '/search',
-      controller: 'SearchController',
-      templateUrl: 'views/search/search.html'
-    })
     .state('settings', {
       url: '/settings',
       controller: 'SettingsController',
       templateUrl: 'views/settings/settings.html'
-    })
-    .state('weather', {
-      url: '/weather/:city/:lat/:lng',
-      controller: 'WeatherController',
-      templateUrl: 'views/weather/weather.html'
     })
     .state('contacts', {
       url: '/contacts',
@@ -28,7 +18,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
       templateUrl: 'views/contacts/contacts.html'
     });
 
-    $urlRouterProvider.otherwise('/search');
+    $urlRouterProvider.otherwise('/contacts');
     
     
     //var v_lang = window.navigator.userLanguage || window.navigator.language;
