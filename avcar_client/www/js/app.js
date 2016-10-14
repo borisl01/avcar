@@ -68,7 +68,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
     };
     
     setData();
-  	Settings.setLanguage('en');
+  	 Settings.setLanguage('en');
   	
   	$scope.$on("contactSelect", function() { 
   		setSelectedContact();  
