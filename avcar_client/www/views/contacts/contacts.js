@@ -1,8 +1,13 @@
 angular.module('App')
-.controller('ContactsController', function ($scope, $rootScope, $http, $stateParams, $ionicActionSheet, $ionicModal, $translate, Contacts, Settings) {
+.controller('ContactsController', function ($scope, $rootScope, $stateParams, $ionicActionSheet, Contacts, Settings) {
   $scope.params = $stateParams;
   $scope.settings = Settings;
   $scope.contacts = Contacts.getAll();
+  $scope.model = {name : '',
+		          rego : '',
+		          phone : '',
+		          notes : '',
+		          picture : ''};
   
   var theContact = Contacts.getContactById($stateParams.cid);
   
@@ -18,9 +23,9 @@ angular.module('App')
     return parseInt(window.innerHeight - barHeight) + 'px';
   };
 
-  $scope.showContactOptions = function () {	
+  $scope.showContactOptions = function($state) {	
     var sheet = $ionicActionSheet.show({
-	
+	 
       buttons: [
         //{text: 'Toggle Favorite'},
         {text : '<p class="actionsheet-center">'+ $rootScope.loadedTranslations.TOGGLE_FAVORITE +'</p>'},
@@ -41,10 +46,13 @@ angular.module('App')
 
         }
         if (index === 3) {
-
+        	var  item = Contacts. getContactById($stateParams.cid)
+        	//Contacts.contactPrint(item);
+    		$rootScope.selectedContact = item
+        	Contacts.edit();
         }
         if (index === 4) {
-
+        	Contacts.remove($stateParams.cid);
         }
         return true;
       }
@@ -79,6 +87,12 @@ angular.module('App')
 	        return true;
 	      }
 	    });
+	  };
+	  
+	  $scope.saveContact = function()  {
+		  var cid = $rootScope.selectedContact.id;
+		 //var contact = Contacts.getContactById(cid);
+		  Contacts.replaceContact(cid,  $rootScope.selectedContact);
 	  };
 
 });

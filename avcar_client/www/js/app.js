@@ -12,6 +12,11 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
       controller: 'ContactsController',
       templateUrl: 'views/contacts/all_contacts.html'
     })
+    .state('edit', {
+      url: '/edit',
+      controller: 'ContactsController',
+      templateUrl: 'views/contacts/contact_edit.html'
+    })
     .state('contact', {
       url: '/contact/:cid',
       controller: 'ContactsController',
@@ -20,10 +25,6 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 
     $urlRouterProvider.otherwise('/contacts');
     
-    
-    //var v_lang = window.navigator.userLanguage || window.navigator.language;
-    //$translateProvider.preferredLanguage(v_lang.substring(0, 2));
-
   $translateProvider
   	.useStaticFilesLoader({
   		prefix: 'res/lang/',
@@ -56,22 +57,33 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
     });
 })
 
-.controller('LeftMenuController', function ($scope, $rootScope, $translate, Locations, Contacts, Settings) {
-  $scope.locations = Locations.data;
-  $scope.contacts = Contacts.getAll();
-  $scope.favorites = Contacts.getFavorites();
+.controller('LeftMenuController', function ($scope, $rootScope, $state, $translate, Contacts, Settings) {
+    setData = function() {	
+    	$scope.contacts = Contacts.getAll();
+    	$scope.favorites = Contacts.getFavorites();
+    };
     
-  Settings.setLanguage('en');
+    setSelectedContact = function() {
+    	$scope.selectedContact = $rootScope.selectedContact
+    };
+    
+    setData();
+  	Settings.setLanguage('en');
+  	
+  	$scope.$on("contactSelect", function() { 
+  		setSelectedContact();  
+ 	});
 
-  $scope.$on("favorites", function() {
-     console.log("CallParentMethod");	
-     $scope.favorites = Contacts.getFavorites();
-     Settings.setLanguage('ua');
-   });
+    $scope.$on("contacts", function() {
+    	setData();
+    	Settings.setLanguage('ua');
+    });
   
-   $scope.switchLanguage = function(key) {
+    $scope.switchLanguage = function(key) {
  	    $translate.use(key);
 	};
+	
+	$rootScope.state = $state;
   }
 )
 
@@ -115,20 +127,21 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 
 .factory('Settings', function ($translate, $rootScope) {
 	var Settings = {
+		lang : 'en',	
 		units: 'us',
 		days: 8,
   
 	setLanguage : function(lang)  {
-		console.log('Setting langiuage to '+ lang);
+		//console.log('Setting language to '+ lang);
+		Settings.lang = lang;
 	    $translate.use(lang);
 	    $rootScope.loadedTranslations = [];
 	    $rootScope.LoadValues = function()  {
-	    $translate(['TOGGLE_FAVORITE','secound']).then(function(translations){
+	    $translate(['TOGGLE_FAVORITE','CONFIRM' ,'YES', 'NO', 'CANCEL']).then(function(translations){
 	    	$rootScope.loadedTranslations = translations;
 	    	})
 	    };
 	    $rootScope.LoadValues();
-	    console.log($rootScope.loadedTranslations.TOGGLE_FAVORITE);
 	}
   }
   return Settings;
@@ -154,7 +167,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
       var index = Locations.getIndex(item);
       if (index >= 0) {
         $ionicPopup.confirm({
-          title: 'Are you sure?',
+          title: $rootScope.loadedTranslations.CONFIRM,
           template: 'This will remove ' + Locations.data[index].city
         }).then(function (res) {
           if (res) {
@@ -182,7 +195,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
   return Locations;
 })
 
-.factory('Contacts', function ($rootScope) {
+.factory('Contacts', function ($rootScope, $ionicPopup, $state) {
 	var Contacts = {
 	  data:[{
 		id	:	1,
@@ -207,6 +220,27 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 		 //console.log('value is ', Contacts.data[index].isFavorite, ' emitting...');
 		 $rootScope.$broadcast("favorites", {}); 
 	  },
+	  remove : function(cid) {
+		 var aContact = Contacts.getContactById(cid);
+		 var index = Contacts.getIndex(aContact);
+		 if (index >= 0) {
+		    $ionicPopup.confirm({
+		       title: $rootScope.loadedTranslations.CONFIRM,
+		       template: 'This will remove ' + aContact.name ,
+		       buttons: [
+		                 { text: $rootScope.loadedTranslations.YES, onTap:function(e){return true;} },
+		                 { text: $rootScope.loadedTranslations.NO,  onTap:function(e){return false;}  }
+		                ] 
+		     }).then(function (res) {
+		        if (res) {
+		            Contacts.data.splice(index, 1);
+		            $rootScope.$broadcast("contacts", {}); 
+		            //Contacts.list();
+		            $state.go('contacts')
+		        }
+		     });
+		 }  
+	  },		 
 	  getAll : function() {
 		 return this.data;
 	  },
@@ -218,10 +252,6 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 	        }
 	      });
 	      //console.log('favorites.length=' + result.length);
-	      for (m = 0; m<result.length; m++){
-	    	  item = result[m];
-	    	  //console.log(item.id + ' ' + item.name + " " + item.isFavorite); 
-	      }
 	      return result;
 	  },
 	  getIndex: function (item) {
@@ -232,7 +262,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 	        }
 	      });
 	      return index;
-	    },
+	  },
 	  getContactById : function(cid) {
 		  var result = null;
 	      angular.forEach(Contacts.data, function (c, i) {
@@ -250,6 +280,20 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 	        }
 	      });
 	      return result;
+	  },
+	  edit : function() {
+		  $rootScope.$broadcast("contactSelect", {}); 
+		  $state.go('edit');
+	  },
+	  replaceContact: function(cid,  item)  {
+		  var contact = Contacts.getContactById(cid);
+		  var index = Contacts.getIndex(contact);
+		  Contacts.data[index] = item;
+	  },		  
+	  list : function() {
+		  for (m = 0; m < this.data.length; m++){
+			  this.contactPrint(this.data[m]);
+		  }
 	  },
 	  contactPrint: function(item) {
 		//console.log("Contact assigned to scope:"); 

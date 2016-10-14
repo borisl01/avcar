@@ -10,10 +10,9 @@
       <div ng-style="{height: getTotalHeight()}">
         <div class="scroll-page center" ng-style="{width: getWidth(), height: getHeight()}">
    			<ion-list>
-   				<ion-item class="item-icon-left item-icon-right text-left" ui-sref="contact({cid :c.id})" menu-close ng-repeat="c in contacts">
-   					<span class="item-icon-left icon ion-person"></span>
-   					{{c.name}}
-   					<span  ng-if="c.isFavorite == true" class="item-icon-right icon ion-heart"></span>
+   				<ion-item class="item-icon-left item-icon-right" ui-sref="contact({cid :c.id})" menu-close ng-repeat="c in contacts">
+   					<span class="item-icon-left icon ion-person">&nbsp;{{c.name}}</span>   					
+   					<i  ng-if="c.isFavorite == true" class="item-icon-right icon ion-heart"></i>
    				</ion-item>
    			</ion-list>
         </div>
