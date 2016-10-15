@@ -13,7 +13,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
       templateUrl: 'views/contacts/all_contacts.html'
     })
     .state('edit', {
-      url: '/edit',
+      url: '/edit/:cid',
       controller: 'ContactsController',
       templateUrl: 'views/contacts/contact_edit.html'
     })
@@ -64,7 +64,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
     };
     
     setSelectedContact = function() {
-    	$scope.selectedContact = $rootScope.selectedContact
+    	$scope.selectedContact = $rootScope.selectedContact;
     };
     
     setData();
@@ -76,7 +76,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 
     $scope.$on("contacts", function() {
     	setData();
-    	Settings.setLanguage('ua');
+    	//Settings.setLanguage('ua');
     });
   
     $scope.switchLanguage = function(key) {
@@ -137,7 +137,8 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 	    $translate.use(lang);
 	    $rootScope.loadedTranslations = [];
 	    $rootScope.LoadValues = function()  {
-	    $translate(['TOGGLE_FAVORITE','CONFIRM' ,'YES', 'NO', 'CANCEL']).then(function(translations){
+	    $translate(['TOGGLE_FAVORITE','CONFIRM' ,'YES', 'NO', 'CANCEL'])
+	    		.then(function(translations){
 	    	$rootScope.loadedTranslations = translations;
 	    	})
 	    };
@@ -213,12 +214,13 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 		notes: 'Checky chick',
 		isFavorite : true
 	  }],
-	  toggle : function(cid) {
+	  
+	  toggleFavorite : function(cid) {
 		 var aContact = Contacts.getContactById(cid);
 		 var index = Contacts.getIndex(aContact);
 		 Contacts.data[index].isFavorite = !Contacts.data[index].isFavorite
-		 //console.log('value is ', Contacts.data[index].isFavorite, ' emitting...');
-		 $rootScope.$broadcast("favorites", {}); 
+		 console.log('value is ', Contacts.data[index].isFavorite, ' emitting...');
+		 $rootScope.$broadcast("contacts", {}); 
 	  },
 	  remove : function(cid) {
 		 var aContact = Contacts.getContactById(cid);
@@ -236,7 +238,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 		            Contacts.data.splice(index, 1);
 		            $rootScope.$broadcast("contacts", {}); 
 		            //Contacts.list();
-		            $state.go('contacts')
+		            $state.go('contacts');
 		        }
 		     });
 		 }  
@@ -281,14 +283,21 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 	      });
 	      return result;
 	  },
-	  edit : function() {
+	  edit : function(cidIn) {
 		  $rootScope.$broadcast("contactSelect", {}); 
-		  $state.go('edit');
+		  $state.go("edit" ,{cid: cidIn }  );
+		  //this.contactPrint($rootScope.selectedContact);
 	  },
 	  replaceContact: function(cid,  item)  {
-		  var contact = Contacts.getContactById(cid);
-		  var index = Contacts.getIndex(contact);
-		  Contacts.data[index] = item;
+		  if (cid == -1) {		//This is a new contact
+			  item.id = Contacts.data.length + 1;
+			  Contacts.data[Contacts.data.length] = item;
+		  } else {
+			  var contact = Contacts.getContactById(cid);
+		  	  var index = Contacts.getIndex(contact);
+		  	  Contacts.data[index] = item;
+	  	  }	   
+		  $state.go('contacts');
 	  },		  
 	  list : function() {
 		  for (m = 0; m < this.data.length; m++){

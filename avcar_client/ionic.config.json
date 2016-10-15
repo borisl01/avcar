@@ -1,8 +1,5 @@
 {
   "name": "avcar_client",
   "app_id": "",
-  "proxies": [
-    {
-    }
-  ]
+  "proxies": [  ]
 }
