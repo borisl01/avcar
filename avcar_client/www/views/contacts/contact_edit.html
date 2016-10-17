@@ -6,7 +6,7 @@
     <ion-scroll direction="y" paging="true" ng-style="{width: getWidth(), height: getHeight()}">
       <div ng-style="{height: getTotalHeight()}">
         <div class="scroll-page center" ng-style="{width: getWidth(), height: getHeight()}">
-   		  <div cclass="list list-inset">
+   		  <div class="list list-inset">
         	    <label class="item item-input item-floating-label">
    				   <span class="input-label">Name</span>
           		   <input type="text" ng-model="selectedContact.name" placeholder="Name" required/>
@@ -23,6 +23,21 @@
    				   <span class="input-label">Notes</span>
    				   <textarea class="form-control editor" rows="6" ng-model="selectedContact.notes" placeholder="Note Content" required></textarea>
         		</label>
+        		
+        		<ul class="list">
+				  <li class="item item-toggle">
+     				 Favourite
+     				 <label class="toggle">
+				       	<input type="checkbox" ng-model="selectedContact.isFavorite">
+   						<div class="track">
+         					<div class="handle"></div>
+    					</div>
+ 					 </label>
+ 				   </li>
+ 				</ul>
+
+     				
+      	
     		 </div>  
     		 <button class="button button-full button-positive icon ion-android-done" ng-click="saveContact()">Apply</button>
         </div>
