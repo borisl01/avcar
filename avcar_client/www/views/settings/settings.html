@@ -2,9 +2,9 @@
   <ion-content>
     <ion-list>
       <ion-item class="item-divider">Language</ion-item>
-      <ion-radio ng-model="settings.lang" ng-value="'en'" ng-change="setLanguage()">English</ion-radio>
-      <ion-radio ng-model="settings.lang" ng-value="'de'" ng-change="setLanguage()">Deutsch</ion-radio>
-      <ion-radio ng-model="settings.lang" ng-value="'ua'" ng-change="setLanguage()">Українська</ion-radio>
+      <ion-radio ng-model="settings.lang" ng-value="'en'" ng-change="setLanguage('en')">English</ion-radio>
+      <ion-radio ng-model="settings.lang" ng-value="'de'" ng-change="setLanguage('de')">Deutsch</ion-radio>
+      <ion-radio ng-model="settings.lang" ng-value="'ua'" ng-change="setLanguage('ua')">Українська</ion-radio>
       <div class="item item-divider">Some setting goes here<span class="badge badge-dark">{{settings.days - 1}}</span></div>
       <div class="item range range-positive">
         2 <input type="range" name="days" ng-model="settings.days" min="2" max="8" value="8"> 8

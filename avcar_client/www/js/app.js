@@ -68,12 +68,6 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
     setData();
   	Settings.setLanguage('en');
   	
-    
-    $rootScope.$watch('Settings.lang', function(newVal, oldVal) {
- 	   Settings.setLanguage(newVal);
-   });
- 	
-  	
   	$scope.$on("contactSelect", function() { 
   		setSelectedContact();  
  	});
@@ -124,7 +118,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 	    $rootScope.LoadValues = function()  {
 	    $translate(['TOGGLE_FAVORITE','CONFIRM' ,'YES', 'NO', 'CANCEL'])
 	    		.then(function(translations){
-	    	$rootScope.loadedTranslations = translations;
+	    	   $rootScope.loadedTranslations = translations;
 	    	})
 	    };
 	    $rootScope.LoadValues();

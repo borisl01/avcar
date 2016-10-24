@@ -1,14 +1,11 @@
 angular.module('App')
 .controller('SettingsController', function ($scope, Settings) {
    $scope.settings = Settings;
-   console.log('Starting Settiings Controller');
-	
-  // $scope.canDelete = false;
+   //console.log('Starting Settiings Controller');
   
-  //BL Simply redirects to the factory 
-   $scope.setLanguage = function() {
-	  console.log('here');
- 	 // Settings.setLanguage();
+   //BL Simply redirects to the factory 
+   $scope.setLanguage = function(value) {
+ 	  Settings.setLanguage(value);
    };
 
    //$scope.remove = function (index) {
