@@ -1,5 +1,16 @@
 {
-	"CONTACTS" : "Контакти",
-	"TOGGLE_FAVORITE" : "Улюблені",
-	"CONTACTS_LIST" : "Bci Контакти" 
+   "CONTACTS" : "Контакти",
+   "TOGGLE_FAVORITE" : "Добавити в улюблені",
+   "CONTACTS_LIST" : "Bci Контакти",
+   "CONTACT_EDIT" : "Редагувати",
+   "CONTACT_DETAILS" : "Деталі",
+   "CONTACTS_NEW" : "Новий контакт",
+   "CONFIRM" : "Ви впевнені?",
+   "YES" : "Так",
+   "NO" : "Ні",
+   "CANCEL" : "Повернутися"
 }
+
+
+ 
+

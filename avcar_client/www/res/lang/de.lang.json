@@ -1,5 +1,12 @@
 {
-	"CONTACTS" : "Kontakte",
-	"TOGGLE_FAVORITE" : "Liebling schalten",
-	"CONTACTS_LIST" : "Alle Kontakten" 
+   "CONTACTS" : "Kontakten",
+   "TOGGLE_FAVORITE" : "Als liebling setzen",
+   "CONTACTS_LIST" : "Alle Kontakten",
+   "CONTACT_EDIT" : "Editieren",
+   "CONTACT_DETAILS" : "Detaile",
+   "CONTACTS_NEW" : "Neuer Kontakt",
+   "CONFIRM" : "Sind Sie sicher?",
+   "YES" : "Ja",
+   "NO" : "Nein",
+   "CANCEL" : "Abbrechen"
 }

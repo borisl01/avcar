@@ -41,8 +41,6 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
   	.useSanitizeValueStrategy('escapeParameters');
 })  
 
-
-
 .run(function($ionicPlatform, $http) {
     $ionicPlatform.ready(function() {
 
@@ -68,7 +66,13 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
     };
     
     setData();
-  	 Settings.setLanguage('en');
+  	Settings.setLanguage('en');
+  	
+    
+    $rootScope.$watch('Settings.lang', function(newVal, oldVal) {
+ 	   Settings.setLanguage(newVal);
+   });
+ 	
   	
   	$scope.$on("contactSelect", function() { 
   		setSelectedContact();  
@@ -76,7 +80,6 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 
     $scope.$on("contacts", function() {
     	setData();
-    	//Settings.setLanguage('ua');
     });
   
     $scope.switchLanguage = function(key) {
@@ -87,26 +90,8 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
   }
 )
 
-.filter('timezone', function () {
-  return function (input, timezone) {
-    if (input && timezone) {
-      var time = moment.tz(input * 1000, timezone);
-      return time.format('LT');
-    }
-    return '';
-  };
-})
 
-.filter('chance', function () {
-  return function (chance) {
-    if (chance) {
-      var value = Math.round(chance * 10);
-      return value * 10;
-    }
-    return 0;
-  };
-})
-
+/* Just an example */
 .filter('icons', function () {
   var map = {
     'clear-day': 'ion-ios-sunny',
@@ -130,9 +115,9 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 		lang : 'en',	
 		units: 'us',
 		days: 8,
-  
+	
 	setLanguage : function(lang)  {
-		//console.log('Setting language to '+ lang);
+		console.log('Setting language to '+ lang);
 		Settings.lang = lang;
 	    $translate.use(lang);
 	    $rootScope.loadedTranslations = [];
@@ -148,54 +133,9 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
   return Settings;
 })
 
-.factory('Locations', function ($ionicPopup) {
-  var Locations = {
-    data: [{
-      city: 'Chicago, IL, USA',
-      lat: 41.8781136,
-      lng: -87.6297982
-    }],
-    getIndex: function (item) {
-      var index = -1;
-      angular.forEach(Locations.data, function (location, i) {
-        if (item.lat == location.lat && item.lng == location.lng) {
-          index = i;
-        }
-      });
-      return index;
-    },
-    toggle: function (item) {
-      var index = Locations.getIndex(item);
-      if (index >= 0) {
-        $ionicPopup.confirm({
-          title: $rootScope.loadedTranslations.CONFIRM,
-          template: 'This will remove ' + Locations.data[index].city
-        }).then(function (res) {
-          if (res) {
-            Locations.data.splice(index, 1);
-          }
-        });
-      } else {
-        Locations.data.push(item);
-        $ionicPopup.alert({
-          title: 'Location saved'
-        });
-      }
-    },
-    primary: function (item) {
-      var index = Locations.getIndex(item);
-      if (index >= 0) {
-        Locations.data.splice(index, 1);
-        Locations.data.splice(0, 0, item);
-      } else {
-        Locations.data.unshift(item);
-      }
-    }
-  };
-
-  return Locations;
-})
-
+/**
+ * Some test data and processing rules
+ */
 .factory('Contacts', function ($rootScope, $ionicPopup, $state) {
 	var Contacts = {
 	  data:[{
@@ -219,7 +159,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 		 var aContact = Contacts.getContactById(cid);
 		 var index = Contacts.getIndex(aContact);
 		 Contacts.data[index].isFavorite = !Contacts.data[index].isFavorite
-		 console.log('value is ', Contacts.data[index].isFavorite, ' emitting...');
+		 //console.log('value is ', Contacts.data[index].isFavorite, ' emitting...');
 		 $rootScope.$broadcast("contacts", {}); 
 	  },
 	  remove : function(cid) {
