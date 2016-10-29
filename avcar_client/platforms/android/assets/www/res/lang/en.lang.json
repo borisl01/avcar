@@ -1,0 +1,15 @@
+{
+   "CONTACTS" : "Contacts",
+   "SETTINGS" : "Settings",
+   "TOGGLE_FAVORITE" : "Toggle favorite",
+   "FAVE_CONTACTS" : "Favourites",
+   "CONTACTS_LIST" : "All contacts",
+   "CONTACT_EDIT" : "Modify a contact",
+   "CONTACT_DETAILS" : "Contact details",
+   "CONTACTS_NEW" : "New contact",
+   "LANGUAGE" : "Language",
+   "CONFIRM" : "Are you sure?",
+   "YES" : "Yes",
+   "NO" : "No",
+   "CANCEL" : "Cancel"
+}

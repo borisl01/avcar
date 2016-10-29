@@ -1,0 +1,22 @@
+<ion-view view-title="{{ 'CONTACTS_LIST' | translate }}">
+  <ion-nav-buttons side="left">
+    <button class="button button-clear" menu-toggle="left"><span class="icon ion-navicon"></span></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button button-icon" ng-click="showContactListOptions()"><span class="icon ion-more"></span></button>
+  </ion-nav-buttons>
+  <ion-content>
+    <ion-scroll direction="y" paging="true" ng-style="{width: getWidth(), height: getHeight()}">
+      <div ng-style="{height: getTotalHeight()}">
+        <div class="scroll-page center" ng-style="{width: getWidth(), height: getHeight()}">
+   			<ion-list>
+   				<ion-item class="item-icon-left item-icon-right" ui-sref="contact({cid :c.id})" menu-close ng-repeat="c in contacts">
+   					<span class="item-icon-left icon ion-person">&nbsp;{{c.name}}</span>   					
+   					<i  ng-if="c.isFavorite == true" class="item-icon-right icon ion-heart"></i>
+   				</ion-item>
+   			</ion-list>
+        </div>
+      </div>
+    </ion-scroll>
+  </ion-content>
+</ion-view>

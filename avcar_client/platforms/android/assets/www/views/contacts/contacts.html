@@ -1,0 +1,28 @@
+<ion-view view-title="{{selectedContact.name}}">
+  <ion-nav-buttons side="left">
+    <button class="button button-clear" menu-toggle="left"><span class="icon ion-navicon"></span></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button button-icon" ng-click="showContactOptions()"><span class="icon ion-more"></span></button>
+  </ion-nav-buttons>
+  <ion-content>
+    <ion-scroll direction="y" paging="true" ng-style="{width: getWidth(), height: getHeight()}">
+      <div ng-style="{height: getTotalHeight()}">
+        <div class="scroll-page center" ng-style="{width: getWidth(), height: getHeight()}">
+          <div class="bar bar-dark">
+            <h1 class="title">{{'CONTACT_DETAILS'  | translate }}</h1>
+          </div>
+          <div class="has-header">
+            <p>{{selectedContact.name}}&nbsp;{{selectedContact.rego}}</p>
+            <p>{{selectedContact.notes}}</p>
+            
+            <p><a class="button icon-left button-calm button-outline" ng-href="tel:  {{selectedContact.phone}}">Call  {{selectedContact.phone}}</a></p>
+            <p><a class="button icon-left button-calm button-outline" ng-click="sendSMS()">Send an SMS to  {{selectedContact.phone}}</a></p>
+         
+          </div>
+        </div>
+
+      </div>
+    </ion-scroll>
+  </ion-content>
+</ion-view>

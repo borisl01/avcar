@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="avcar.client" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="Keyboard">
+        <param name="android-package" value="com.ionic.keyboard.IonicKeyboard" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Sms">
+        <param name="android-package" value="com.cordova.plugins.sms.Sms" />
+    </feature>
+    <name>avcar client</name>
+    <description>
+		An Ionic Framework and Cordova project PoC for Avcar.
+	</description>
+    <author email="boris.levin.au@gmail.com" href="">
+		Boris
+	</author>
+    <content src="index.html" />
+    <access origin="*" />
+    <access launch-external="yes" origin="tel:*" />
+    <splash density="land-hdpi" src="resources/screen/android/android_hdpi_landscape.png" />
+    <splash density="land-ldpi" src="resources/screen/android/android_ldpi_landscape.png" />
+    <splash density="land-mdpi" src="resources/screen/android/android_mdpi_landscape.png" />
+    <splash density="land-xhdpi" src="resources/screen/android/android_xhdpi_landscape.png" />
+    <splash density="port-hdpi" src="resources/screen/android/android_hdpi_portrait.png" />
+    <splash density="port-ldpi" src="resources/screen/android/android_ldpi_portrait.png" />
+    <splash density="port-mdpi" src="resources/screen/android/android_mdpi_portrait.png" />
+    <splash density="port-xhdpi" src="resources/screen/android/android_xhdpi_portrait.png" />
+    <preference name="loglevel" value="DEBUG" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="UIWebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="BackupWebStorage" value="none" />
+    <preference name="SplashScreenDelay" value="3000" />
+</widget>
