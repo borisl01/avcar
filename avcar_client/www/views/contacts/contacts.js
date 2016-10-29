@@ -14,7 +14,7 @@ angular.module('App')
 	  var theContact = Contacts.getContactById(cid);
 	  
 	  if (theContact == null) {
-		  console.log("no cid"); 
+		  //console.log("no cid"); 
 	  } else {
 		  if (cid && cid == -1) {
 			  theContact = {id : -1, name:'', rego:'', phone:'', notes:''};
@@ -22,7 +22,7 @@ angular.module('App')
 		  } else {	  
 			  $scope.selectedContact = theContact;
 			  //console.log("contacts.js:");
-			  Contacts.contactPrint($scope.selectedContact);
+			  //Contacts.contactPrint($scope.selectedContact);
 		  }
 	  }
   }
@@ -44,8 +44,6 @@ angular.module('App')
       buttons: [
         //{text: 'Toggle Favorite'},
         {text : '<p class="actionsheet-center">'+ $rootScope.loadedTranslations.TOGGLE_FAVORITE +'</p>'},
-        {text: 'Call'},
-        {text: 'Send a message'},
         {text: 'Modify'},
         {text: 'Remove'}
       ],
@@ -55,18 +53,12 @@ angular.module('App')
           Contacts.toggleFavorite($stateParams.cid);
         }
         if (index === 1) {
-
-        }
-        if (index === 2) {
-      	  	
-        }
-        if (index === 3) {
         	var  item = Contacts.getContactById($stateParams.cid)
         	//Contacts.contactPrint(item);
     		$rootScope.selectedContact = item;
         	Contacts.edit($stateParams.cid);
         }
-        if (index === 4) {
+        if (index === 2) {
         	Contacts.remove($stateParams.cid);
         }
         return true;

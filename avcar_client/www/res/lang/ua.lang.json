@@ -1,9 +1,12 @@
 {
    "CONTACTS" : "Контакти",
+   "SETTINGS" : "Настрійки",
    "TOGGLE_FAVORITE" : "Добавити в улюблені",
+   "FAVE_CONTACTS" : "Улюблені",
    "CONTACTS_LIST" : "Bci Контакти",
    "CONTACT_EDIT" : "Редагувати",
    "CONTACT_DETAILS" : "Деталі",
+   "LANGUAGE" : "Мова",
    "CONTACTS_NEW" : "Новий контакт",
    "CONFIRM" : "Ви впевнені?",
    "YES" : "Так",

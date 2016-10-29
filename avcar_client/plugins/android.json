@@ -15,6 +15,9 @@
         },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "avcar.client"
+        },
+        "com.cordova.plugins.sms": {
+            "PACKAGE_NAME": "avcar.client"
         }
     },
     "dependent_plugins": {

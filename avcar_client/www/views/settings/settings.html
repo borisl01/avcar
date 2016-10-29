@@ -1,7 +1,7 @@
-<ion-view view-title="Settings">
+<ion-view view-title="{{'SETTINGS'  | translate }}">
   <ion-content>
     <ion-list>
-      <ion-item class="item-divider">Language</ion-item>
+      <ion-item class="item-divider">{{'LANGUAGE'  | translate }}</ion-item>
       <ion-radio ng-model="settings.lang" ng-value="'en'" ng-change="setLanguage('en')">English</ion-radio>
       <ion-radio ng-model="settings.lang" ng-value="'de'" ng-change="setLanguage('de')">Deutsch</ion-radio>
       <ion-radio ng-model="settings.lang" ng-value="'ua'" ng-change="setLanguage('ua')">Українська</ion-radio>

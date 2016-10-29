@@ -10,12 +10,13 @@
       <div ng-style="{height: getTotalHeight()}">
         <div class="scroll-page center" ng-style="{width: getWidth(), height: getHeight()}">
           <div class="bar bar-dark">
-            <h1 class="title">Contact details</h1>
+            <h1 class="title">{{'CONTACT_DETAILS'  | translate }}</h1>
           </div>
           <div class="has-header">
             <p>{{selectedContact.name}}&nbsp;{{selectedContact.rego}}</p>
             <p>{{selectedContact.notes}}</p>
-            <p>Phone: {{selectedContact.phone}}</p>
+            
+            <a class="button icon-left ion-ios7-telephone button-calm button-outline" ng-href="tel:  {{selectedContact.phone}}">Call  {{selectedContact.phone}}</a>
           </div>
         </div>
         <div class="scroll-page" ng-style="{width: getWidth(), height: getHeight()}">

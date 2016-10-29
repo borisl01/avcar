@@ -23,11 +23,9 @@
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
  
-    <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="views/search/search.js"></script>
     <script src="views/settings/settings.js"></script>
-    <script src="views/weather/weather.js"></script>
     <script src="views/contacts/contacts.js"></script>
   </head>
   <body ng-app="App">
@@ -48,9 +46,9 @@
         </ion-header-bar>
         <ion-content>
           <ion-list>
-            <ion-item class="item-icon-left" ui-sref="contacts" menu-close><span class="icon ion-person-stalker"></span> All contacts</ion-item>
-            <ion-item class="item-icon-left" ui-sref="settings" menu-close><span class="icon ion-ios-cog"></span> Settings</ion-item>
-            <ion-item class="item-divider">Favorite contacts</ion-item>
+            <ion-item class="item-icon-left" ui-sref="contacts" menu-close><span class="icon ion-person-stalker"></span> {{"CONTACTS_LIST"  | translate }}</ion-item>
+            <ion-item class="item-icon-left" ui-sref="settings" menu-close><span class="icon ion-ios-cog"></span>{{"SETTINGS"  | translate }}</ion-item>
+            <ion-item class="item-divider">{{ 'FAVE_CONTACTS' | translate }}</ion-item>
             <ion-item class="item-icon-left" ui-sref="contact({cid :c.id})" menu-close ng-repeat="c in favorites"><span class="icon ion-person"></span>{{c.name}}</ion-item>
 
           </ion-list>

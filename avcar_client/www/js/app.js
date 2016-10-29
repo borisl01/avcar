@@ -1,4 +1,4 @@
-angular.module('App', ['ionic', 'pascalprecht.translate'])
+angular.module('App', ['ionic', 'pascalprecht.translate', 'ngCordova'])
 
 .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
   $stateProvider
@@ -47,7 +47,6 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
     	if(window.cordova && window.cordova.plugins.Keyboard) {
          cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
        }
-       // console.log("globalization=" + navigator.globalization);
    
        if(window.StatusBar) {
           StatusBar.styleDefault();
@@ -136,7 +135,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 		id	:	1,
 		name: 'test',
 		rego: 'VTM123',
-		phone: 'Unknown',
+		phone: '0414870434',
 		notes: 'Cheeky chick',
 		isFavorite : true	
 	  },
@@ -144,7 +143,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate'])
 		id	:	2,
 		name: 'test22',
 		rego: 'ABC123',
-		phone: 'Unknown',
+		phone: '0414870434',
 		notes: 'Checky chick',
 		isFavorite : true
 	  }],
