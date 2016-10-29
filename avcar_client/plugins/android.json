@@ -10,9 +10,6 @@
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "avcar.client"
         },
-        "cordova-plugin-globalization": {
-            "PACKAGE_NAME": "avcar.client"
-        },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "avcar.client"
         },

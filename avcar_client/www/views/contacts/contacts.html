@@ -16,21 +16,12 @@
             <p>{{selectedContact.name}}&nbsp;{{selectedContact.rego}}</p>
             <p>{{selectedContact.notes}}</p>
             
-            <a class="button icon-left ion-ios7-telephone button-calm button-outline" ng-href="tel:  {{selectedContact.phone}}">Call  {{selectedContact.phone}}</a>
-          </div>
-        </div>
-        <div class="scroll-page" ng-style="{width: getWidth(), height: getHeight()}">
-          <div class="bar bar-dark">
-            <h1 class="title"> Forecast</h1>
-          </div>
-          <div class="has-header">
-            <p class="padding">Summary</p>
-   
-          </div>
-        </div>
-        <div class="scroll-page" ng-style="{width: getWidth(), height: getHeight()}">
+            <p><a class="button icon-left button-calm button-outline" ng-href="tel:  {{selectedContact.phone}}">Call  {{selectedContact.phone}}</a></p>
+            <p><a class="button icon-left button-calm button-outline" ng-click="sendSMS()">Send an SMS to  {{selectedContact.phone}}</a></p>
          
+          </div>
         </div>
+
       </div>
     </ion-scroll>
   </ion-content>

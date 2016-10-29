@@ -1,4 +1,4 @@
-angular.module('App', ['ionic', 'pascalprecht.translate', 'ngCordova'])
+angular.module('App', ['ionic', 'pascalprecht.translate', 'ngCordova'])  //, 'ngCordova'
 
 .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
   $stateProvider
@@ -41,7 +41,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate', 'ngCordova'])
   	.useSanitizeValueStrategy('escapeParameters');
 })  
 
-.run(function($ionicPlatform, $http) {
+.run(function($ionicPlatform, $http, $cordovaSms) {
     $ionicPlatform.ready(function() {
 
     	if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -51,6 +51,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate', 'ngCordova'])
        if(window.StatusBar) {
           StatusBar.styleDefault();
        }
+       
     });
 })
 
@@ -239,7 +240,7 @@ angular.module('App', ['ionic', 'pascalprecht.translate', 'ngCordova'])
 	  },
 	  contactPrint: function(item) {
 		//console.log("Contact assigned to scope:"); 
-		 console.log(item.id + ' ' + item.name + " " + item.isFavorite); 
+		 console.log(item.id + ' ' + item.name + " " + item.isFavorite + " " + item.phone); 
 	  }
 	}
 	return Contacts;
